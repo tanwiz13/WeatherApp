@@ -1,7 +1,12 @@
 import React, {PureComponent} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import LottieView from 'lottie-react-native';
+import {create} from 'apisauce';
 
+const api = create({
+  baseURL: 'https://api.openweathermap.org/data/2.5/',
+  headers: {Accept: 'application/vnd.github.v3+json'},
+});
 const arr = [
     {
       day: 'Monday',
@@ -34,6 +39,9 @@ export default class HomeScreen extends PureComponent {
     }
 
     componentDidMount() {
+        api.get('onecall?lat=27.2046&lon=77.4977&exclude=hourly,minutely&appid=d592c224dc9a68b48eeb900aeaea2af2')
+            .then((response) => console.log('response', response));
+
         setTimeout(() => {
           this.setState({showLoader: false});
         }, 5000);
@@ -64,7 +72,7 @@ export default class HomeScreen extends PureComponent {
                 />
             )}
             <View style={{ backgroundColor:'white', flex:1}}>
-                <View style={{justifyContent:'center', alignItems:'center', flex: 1, backgroundColor: 'blue'}}>
+                <View style={{justifyContent:'center', alignItems:'center', flex: 1, backgroundColor: 'white'}}>
                     <Text>10</Text>
                     <Text>Delhi</Text>                                                  
                 </View>
