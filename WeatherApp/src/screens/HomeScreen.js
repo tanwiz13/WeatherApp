@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
-
+import LottieView from 'lottie-react-native';
 
 const arr = [
     {
@@ -26,7 +26,18 @@ const arr = [
   ];
 
 export default class HomeScreen extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = {
+          showLoader: false, //TODO: change this to true
+        };
+    }
 
+    componentDidMount() {
+        setTimeout(() => {
+          this.setState({showLoader: false});
+        }, 5000);
+    }
 
     renderCard = (obj) => {
         console.log('object', obj);
@@ -42,6 +53,16 @@ export default class HomeScreen extends PureComponent {
     render() {
         return (
         <View style={styles.container}>
+            {this.state.showLoader && (
+                <LottieView
+                    ref={(animation) => {
+                    this.animation = animation;
+                    }}
+                    source={require('../assets/loader.json')}
+                    autoPlay
+                    loop
+                />
+            )}
             <View style={{ backgroundColor:'white', flex:1}}>
                 <View style={{justifyContent:'center', alignItems:'center', flex: 1, backgroundColor: 'blue'}}>
                     <Text>10</Text>
@@ -60,7 +81,7 @@ const styles = StyleSheet.create({
     container: {
         flex:1, 
         justifyContent:'center',
-        backgroundColor: 'blue'
+        backgroundColor: 'white'
     },
     cardView:{
         justifyContent: 'space-between', 
