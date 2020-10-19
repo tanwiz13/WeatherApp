@@ -2,30 +2,8 @@ import React, {PureComponent} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import LottieView from 'lottie-react-native';
 import GlobalStore from '../stores/GlobalStore';
-
-const arr = [
-    {
-      day: 'Monday',
-      temp: 8,
-    },
-    {
-      day: 'Monday',
-      temp: 8,
-    },
-    {
-      day: 'Monday',
-      temp: 8,
-    },
-    {
-      day: 'Monday',
-      temp: 8,
-    },
-    {
-      day: 'Monday',
-      temp: 8,
-    },
-  ];
-
+import { observer, inject } from "mobx-react";
+@observer
 export default class HomeScreen extends PureComponent {
     constructor(props) {
         super(props);
@@ -35,10 +13,10 @@ export default class HomeScreen extends PureComponent {
     }
 
     componentDidMount = async() => {
-        await GlobalStore.getWeatherData();
+        await GlobalStore.getLocationCoords();
         setTimeout(() => {
           this.setState({showLoader: false});
-        }, 5000);
+        }, 1000);
     }
 
     renderCard = (obj) => {
@@ -46,7 +24,7 @@ export default class HomeScreen extends PureComponent {
         return (
             <View style={styles.cardView}>
                 <Text style={{fontSize: 22}}>{obj.item.day}</Text>
-                <Text style={{fontSize: 22}}>{obj.item.temp}</Text>
+                <Text style={{fontSize: 22}}>{obj.item.temp.day}</Text>
             </View>
         );
     };
@@ -71,7 +49,7 @@ export default class HomeScreen extends PureComponent {
                     <Text>Delhi</Text>                                                  
                 </View>
                 <View>
-                    <FlatList data={arr} renderItem={(item) => this.renderCard(item)} />
+                    <FlatList data={GlobalStore.forecastData.slice(0,5)} extraData={GlobalStore.forecastData} renderItem={(item) => this.renderCard(item)} />
                 </View>
             </View>
         </View>
