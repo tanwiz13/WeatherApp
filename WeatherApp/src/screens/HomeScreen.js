@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import LottieView from 'lottie-react-native';
 import GlobalStore from '../stores/GlobalStore';
 import { observer, inject } from "mobx-react";
@@ -45,8 +46,31 @@ export default class HomeScreen extends PureComponent {
             )}
             <View style={{ backgroundColor:'white', flex:1}}>
                 <View style={{justifyContent:'center', alignItems:'center', flex: 1, backgroundColor: 'white'}}>
-                    <Text>10</Text>
-                    <Text>Delhi</Text>                                                  
+                {Object.keys(GlobalStore.currentTempObj).length === 0 && GlobalStore.currentTempObj.constructor === Object && GlobalStore.currentTempObj.day != "" &&
+                (<>
+                  <Animatable.Text
+                  delay={500}
+                  easing="ease-in-out-back"
+                  duration={2000}
+                  useNativeDriver={true}
+                  animation="zoomIn"
+                  iterationCount={1}
+                  style={{fontSize:30}}
+                  onAnimationEnd={this.afterAnimationEnd}>
+                  {GlobalStore.currentTempObj.day}
+                </Animatable.Text>
+                <Animatable.Text
+                  delay={500}
+                  easing="ease-in-out-back"
+                  duration={2000}
+                  useNativeDriver={true}
+                  animation="zoomIn"
+                  iterationCount={1}
+                  style={{fontSize:30}}
+                  onAnimationEnd={this.afterAnimationEnd}>
+                  Delhi
+                </Animatable.Text>
+                </>)}                                         
                 </View>
                 <View>
                     <FlatList data={GlobalStore.forecastData.slice(0,5)} extraData={GlobalStore.forecastData} renderItem={(item) => this.renderCard(item)} />
