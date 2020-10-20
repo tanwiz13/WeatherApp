@@ -4,6 +4,8 @@ import * as Animatable from 'react-native-animatable';
 import LottieView from 'lottie-react-native';
 import GlobalStore from '../stores/GlobalStore';
 import { observer, inject } from "mobx-react";
+import { withStore } from '../stores/Stores';
+@withStore
 @observer
 export default class HomeScreen extends PureComponent {
     constructor(props) {
@@ -11,13 +13,6 @@ export default class HomeScreen extends PureComponent {
         this.state = {
           showLoader: false, //TODO: change this to true
         };
-    }
-
-    componentDidMount = async() => {
-        await GlobalStore.getLocationCoords();
-        setTimeout(() => {
-          this.setState({showLoader: false});
-        }, 1000);
     }
 
     renderCard = (obj) => {
@@ -46,7 +41,7 @@ export default class HomeScreen extends PureComponent {
             )}
             <View style={{ backgroundColor:'white', flex:1}}>
                 <View style={{justifyContent:'center', alignItems:'center', flex: 1, backgroundColor: 'white'}}>
-                {Object.keys(GlobalStore.currentTempObj).length === 0 && GlobalStore.currentTempObj.constructor === Object && GlobalStore.currentTempObj.day != "" &&
+                {
                 (<>
                   <Animatable.Text
                   delay={500}
@@ -57,7 +52,7 @@ export default class HomeScreen extends PureComponent {
                   iterationCount={1}
                   style={{fontSize:30}}
                   onAnimationEnd={this.afterAnimationEnd}>
-                  {GlobalStore.currentTempObj.day}
+                  {this.props.store.currentTempObj.temp}
                 </Animatable.Text>
                 <Animatable.Text
                   delay={500}
@@ -73,7 +68,7 @@ export default class HomeScreen extends PureComponent {
                 </>)}                                         
                 </View>
                 <View>
-                    <FlatList data={GlobalStore.forecastData.slice(0,5)} extraData={GlobalStore.forecastData} renderItem={(item) => this.renderCard(item)} />
+                    <FlatList data={this.props.store.forecastData.slice(0,5)} extraData={this.props.store.forecastData} renderItem={(item) => this.renderCard(item)} />
                 </View>
             </View>
         </View>
