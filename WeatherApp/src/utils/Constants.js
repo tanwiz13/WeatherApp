@@ -9,4 +9,9 @@ module.exports = {
         API_KEY: 'd592c224dc9a68b48eeb900aeaea2af2',
     },
 
+    STRINGS: {
+        RETRY: 'RETRY',
+        SOMETHING_WENT_WRONG: 'Something Went Wrong At Our End'
+    }
+
 };

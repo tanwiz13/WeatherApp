@@ -4,7 +4,7 @@ import * as Animatable from 'react-native-animatable';
 import { observer, inject } from "mobx-react";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { CommonActions } from '@react-navigation/native';
-
+import Constants from '../utils/Constants';
 @inject('store')
 @observer
 class ErrorScreen extends PureComponent {
@@ -37,10 +37,10 @@ class ErrorScreen extends PureComponent {
                 useNativeDriver={true}
                 animation="zoomIn"
                 iterationCount={1}
-                style={{fontSize: 40, marginHorizontal: 50, textAlign:'left'}}
+                style={styles.errorMsg}
                 onAnimationEnd={this.afterAnimationEnd}
                 >
-                Something went wrong at our side
+                {Constants.STRINGS.SOMETHING_WENT_WRONG}
             </Animatable.Text>
             <TouchableOpacity 
                 style={styles.retryButton}
@@ -49,7 +49,7 @@ class ErrorScreen extends PureComponent {
                     this.resetTo();
                 }}
             > 
-                <Text>RETRY</Text>
+                <Text>{Constants.STRINGS.RETRY}</Text>
             </TouchableOpacity>
         </View>
         );
@@ -60,16 +60,22 @@ const styles = StyleSheet.create({
     container: {
         flex:1, 
         justifyContent:'center',
-        alignItems:'center',
         backgroundColor: 'white'
     },
     retryButton: {
-        marginTop: 30,
+        marginTop: 60,
         borderWidth: 1, 
         height: 50, 
         width: 100, 
         justifyContent: 'center', 
-        alignItems: 'center'
+        alignItems: 'center',
+        alignSelf: 'center'
+    },
+    errorMsg:{
+        fontSize: 40, 
+        marginLeft: 50, 
+        textAlign:'left', 
+        width:250
     }
 })
 
