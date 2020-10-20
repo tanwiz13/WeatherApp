@@ -1,19 +1,9 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from './src/screens/HomeScreen';
 import Splash from './src/screens/Splash';
 import { Provider, observer, inject } from 'mobx-react';
-import { observable } from 'mobx';
-import { StoreProvider } from './src/stores/Stores';
 import GlobalStore from './src/stores/GlobalStore';
 import ErrorScreen from './src/screens/ErrorScreen';
 
@@ -24,11 +14,12 @@ const App = (observer(() => {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator headerMode='none'>
+        <Stack.Screen name="Splash" component={Splash} />
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen name="ErrorScreen" component={ErrorScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );
 }));
 export default App;
-// export default (observer(App));
