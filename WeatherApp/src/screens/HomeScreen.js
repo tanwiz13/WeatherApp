@@ -25,7 +25,7 @@ export default class HomeScreen extends PureComponent {
     render() {
         return (
         <View style={styles.container}>
-            <View style={{ backgroundColor:'white', flex:1}}>
+            <View style={{ backgroundColor:'white', flex:1, borderBottomWidth: 1, borderBottomColor: 'black'}}>
                 <View style={styles.mainView}>
                 {
                 (<>
@@ -36,7 +36,7 @@ export default class HomeScreen extends PureComponent {
                     useNativeDriver={true}
                     animation="zoomIn"
                     iterationCount={1}
-                    style={{fontSize:30}}
+                    style={{fontSize:50}}
                     onAnimationEnd={this.afterAnimationEnd}
                   >
                     {this.props.store.currentTempObj.temp}
@@ -48,7 +48,7 @@ export default class HomeScreen extends PureComponent {
                     useNativeDriver={true}
                     animation="zoomIn"
                     iterationCount={1}
-                    style={{fontSize:30}}
+                    style={{fontSize:35}}
                     onAnimationEnd={this.afterAnimationEnd}
                   >
                     Delhi
