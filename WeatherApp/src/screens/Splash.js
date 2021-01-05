@@ -1,10 +1,12 @@
 import React, {PureComponent} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import LottieView from 'lottie-react-native';
 import { observer, inject } from "mobx-react";
+import { StackActions } from '@react-navigation/native';
+
 @inject('store')
 @observer
-class Splash extends React.Component {
+class Splash extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,16 +15,15 @@ class Splash extends React.Component {
     }
 
     componentDidMount = async() => {
-        this.props.store.getLocationCoords((res)=>{
+        let res = await this.props.store.getSongs();
             if(res){
                 this.setState({showLoader: false});
-                this.props.navigation.navigate('HomeScreen');
+                this.props.navigation.dispatch(StackActions.replace('Songs'));
             }
             else{
                 this.setState({showLoader: false});
                 this.props.navigation.navigate('ErrorScreen');
             }
-        })
     }
     
     
